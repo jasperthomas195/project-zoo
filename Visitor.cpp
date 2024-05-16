@@ -38,7 +38,7 @@ void Visitor::set_MoneySpent(int amount) {
 
 // Simulate a visitor visiting an enclosure
 void Visitor::visitEnclosure(Enclosure* enclosure) {
-    // TODO: Implement this function based on the enclosure and animals' state
+    // TO DO: Implement this function based on the enclosure and animals' state
 }
 
 // Handle a visitor making a purchase
