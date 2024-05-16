@@ -5,6 +5,7 @@
 
 class Visitor {
 private:
+    int visitors;
     int satisfaction_level;
     int money_spent;
 
