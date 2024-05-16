@@ -1,6 +1,6 @@
 #include "Finances.h"
 
-Finances::Finances() : balance(0.0), amphibianPrice(100.0), mammalPrice(200.0), avianPrice(150.0) {
+Finances::Finances() : balance(0.0), amphibianPrice(100.0), mammalPrice(200.0), avianPrice(150.0), zookeeperPrice(240.0) {
 }
 
 Finances::~Finances() {
@@ -20,6 +20,10 @@ double Finances::getMammalPrice() const {
 
 double Finances::getAvianPrice() const {
     return avianPrice;
+}
+
+double Finances::getZookeeperPrice() const {
+    return zookeeperPrice;
 }
 
 void Finances::updateBalance(double amount) {

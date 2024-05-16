@@ -8,6 +8,7 @@ private:
     double amphibianPrice; // Price of amphibians
     double mammalPrice; // Price of mammals
     double avianPrice; // Price of avians
+    double zookeeperPrice;
 
 
 public:
@@ -18,6 +19,7 @@ public:
     double getAmphibianPrice() const; // Getter for amphibian price
     double getMammalPrice() const; // Getter for mammal price
     double getAvianPrice() const; // Getter for avian price
+    double getZookeeperPrice() const;
 
 
     void updateBalance(double amount); // Function to update the balance

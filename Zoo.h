@@ -7,7 +7,7 @@
 #include "Living_Animal.h"
 #include "Living_Zookeeper.h"
 #include "Finances.h"
-#include "Enclosure.h"
+#include "Enclosure.h" 
 
 class Zoo {
 private:

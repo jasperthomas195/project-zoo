@@ -147,11 +147,11 @@ void Zoo::manage_staff() {
     }
 }
 void Zoo::hire_zookeeper() {
-    if (finances.getBalance() < COST_ZOOKEEPER) {
+    if (finances.getBalance() < zookeeperPrice) {
         std::cout << "Not enough funds to hire a zookeeper.\n";
         return;
     }
-    finances.deduct_expense(COST_ZOOKEEPER);
+    finances.deduct_expense(zookeeperPrice);
     Living_Zookeeper* zookeeper = new Living_Zookeeper();
     staff.push_back(zookeeper);
     std::cout << "Zookeeper hired successfully.\n";
