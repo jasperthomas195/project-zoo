@@ -7,10 +7,6 @@ Zoo::Zoo() : visitors_today(0), average_visitor_satisfaction(0.0) {
 const double COST_ZOOKEEPER = 1500.0;
 const double SELL_ZOOKEEPER = 1250.0;
 
-const double COST_AMPHIBIAN = 1000.0;
-const double COST_MAMMAL = 1500.0;
-const double COST_AVIAN = 2000.0;
-
 Zoo::~Zoo() {
     for (auto visitor : visitors) {
         delete visitor;
