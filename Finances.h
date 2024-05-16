@@ -1,4 +1,4 @@
-// Finances.h
+
 #ifndef FINANCES_H
 #define FINANCES_H
 
@@ -26,4 +26,4 @@ public:
     void handleVisitorPurchase(double purchaseAmount); // Function to handle visitor purchases
 };
 
-#endif // FINANCES_H
+#endif 
