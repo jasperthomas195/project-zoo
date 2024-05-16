@@ -3,9 +3,6 @@
 Zoo::Zoo() : visitors_today(0), average_visitor_satisfaction(0.0) {
 }
 
-// Example prices, can be changed later
-const double COST_ZOOKEEPER = 1500.0;
-const double SELL_ZOOKEEPER = 1250.0;
 
 Zoo::~Zoo() {
     for (auto visitor : visitors) {
@@ -23,6 +20,8 @@ Zoo::~Zoo() {
 }
 
 void Zoo::open_for_day() {
+    double zookeeperCost = staff.size() * 240.0;
+    finances.deductExpense(zookeeperCost);
     std::cout << "Current balance of the zoo: $" << finances.getBalance() << std::endl;
     std::cout << "Current number of animals: " << animals.size() << std::endl;
     std::cout << "Current number of zookeepers: " << staff.size() << std::endl;
