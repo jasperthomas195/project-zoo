@@ -35,15 +35,15 @@ void Zoo::open_for_day() {
 }
 
 void Zoo::close_for_day() {
+    finances.update_balance(visitors.size());
     std::cout << "Current balance of the zoo: $" << finances.getBalance() << std::endl;
     std::cout << "Current number of animals: " << animals.size() << std::endl;
     std::cout << "Current number of zookeepers: " << staff.size() << std::endl;
-    finances.update_balance(visitors.size());
 }
 
 void Zoo::admit_visitor(Visitor* visitor) {
     visitors.push_back(visitor);
-    finances.update_balance(visitor->getTicketPrice());
+
     visitors_today = visitors_size();
 }
 
@@ -80,7 +80,7 @@ void Zoo::buy_amphibian() {
         return;
     }
     finances.deduct_expense(COST_AMPHIBIAN);
-    Amphibian* amphibian = new Amphibian();
+    Living_Animal_Amphibian* amphibian = new Living_Animal_Amphibian();
     animals.push_back(amphibian);
     std::cout << "Amphibian bought successfully.\n";
 }
@@ -90,7 +90,7 @@ void Zoo::buy_mammal() {
         return;
     }
     finances.deduct_expense(COST_MAMMAL);
-    Mammal* mammal = new Mammal();
+    Living_Animal_Mammal* mammal = new Living_Animal_Mammal();
     animals.push_back(mammal);
     std::cout << "Mammal bought successfully.\n";
 }
@@ -100,7 +100,7 @@ void Zoo::buy_avian() {
         return;
     }
     finances.deduct_expense(COST_AVIAN);
-    Avian* avian = new Avian();
+    Living_Animal_Avian* avian = new Living_Animal_Avian();
     animals.push_back(avian);
     std::cout << "Avian bought successfully.\n";
 }
