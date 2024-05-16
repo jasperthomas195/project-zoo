@@ -71,31 +71,31 @@ void Zoo::manage_animals() {
     }
 }
 void Zoo::buy_amphibian() {
-    if (finances.getBalance() < COST_AMPHIBIAN) {
+    if (finances.getBalance() < amphibianPrice) {
         std::cout << "Not enough funds to buy an amphibian.\n";
         return;
     }
-    finances.deduct_expense(COST_AMPHIBIAN);
+    finances.deduct_expense(amphibianPrice);
     Living_Animal_Amphibian* amphibian = new Living_Animal_Amphibian();
     animals.push_back(amphibian);
     std::cout << "Amphibian bought successfully.\n";
 }
 void Zoo::buy_mammal() {
-    if (finances.getBalance() < COST_MAMMAL) {
+    if (finances.getBalance() < mammalPrice) {
         std::cout << "Not enough funds to buy a mammal.\n";
         return;
     }
-    finances.deduct_expense(COST_MAMMAL);
+    finances.deduct_expense(mammalPrice);
     Living_Animal_Mammal* mammal = new Living_Animal_Mammal();
     animals.push_back(mammal);
     std::cout << "Mammal bought successfully.\n";
 }
 void Zoo::buy_avian() {
-    if (finances.getBalance() < COST_AVIAN) {
+    if (finances.getBalance() < avianPrice) {
         std::cout << "Not enough funds to buy an avian.\n";
         return;
     }
-    finances.deduct_expense(COST_AVIAN);
+    finances.deduct_expense(avianPrice);
     Living_Animal_Avian* avian = new Living_Animal_Avian();
     animals.push_back(avian);
     std::cout << "Avian bought successfully.\n";
