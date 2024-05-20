@@ -3,22 +3,27 @@
 
 #include <iostream>
 #include <vector>
+#include "Living.h"
 #include "Visitor.h"
 #include "Living_Animal.h"
+#include "Living_Animal_Mammal.h"
 #include "Living_Zookeeper.h"
 #include "Finances.h"
 #include "Enclosure.h" 
 
 class Zoo {
 private:
-    std::vector<Visitor*> visitors;
-    std::vector<Living_Animal*> animals;
-    std::vector<Living_Zookeeper*> staff;
-    Finances finances;
-    std::vector<Enclosure*> enclosures;
-
     int visitors_today;
     double average_visitor_satisfaction;
+    std::vector<Visitor*> visitors;
+    std::vector<Living_Zookeeper*> staff;
+    std::vector<Living_Animal_Mammal*> mammals;
+    std::vector<Living_Animal_Amphibian*> amphibians;
+    std::vector<Living_Animal_Avian*> avians;
+    Finances finances;
+    Enclosure mammalEnclosure;
+    Enclosure amphibianEnclosure;
+    Enclosure avianEnclosure;
 
     void hire_zookeeper();
     void fire_zookeeper();
@@ -27,7 +32,7 @@ private:
     void buy_avian();
 
 public:
-    Zoo();
+    Zoo(double initialBalance);
     ~Zoo();
 
     void open_for_day();

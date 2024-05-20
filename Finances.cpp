@@ -1,6 +1,6 @@
 #include "Finances.h"
 
-Finances::Finances() : balance(0.0), amphibianPrice(100.0), mammalPrice(200.0), avianPrice(150.0), zookeeperPrice(240.0) {
+Finances::Finances(double initialBalance) : balance(0.0), amphibianPrice(100.0), mammalPrice(200.0), avianPrice(150.0), zookeeperPrice(240.0) {
 }
 
 Finances::~Finances() {

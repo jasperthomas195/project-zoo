@@ -4,7 +4,7 @@
 Enclosure::Enclosure(int initialCapacity) : capacity(initialCapacity) {}
 
 Enclosure::~Enclosure() {
-    for (Animal* animal : animals) {
+    for (Living_Animal* animal : animals) {
         delete animal;
     }
 animals.clear();
@@ -18,7 +18,7 @@ int Enclosure::getAnimalCount() const {
     return animals.size();
 }
 
-bool Enclosure::addAnimal(Animal* animal) {
+bool Enclosure::addAnimal(Living_Animal* animal) {
     if (animals.size() < capacity) {
         animals.push_back(animal);
         return true;
@@ -26,7 +26,7 @@ bool Enclosure::addAnimal(Animal* animal) {
     return false; // Unable to add animal, enclosure at maximum capacity
 }
 
-bool Enclosure::removeAnimal(Animal* animal) {
+bool Enclosure::removeAnimal(Living_Animal* animal) {
     auto it = std::find(animals.begin(), animals.end(), animal);
     if (it != animals.end()) {
         animals.erase(it);

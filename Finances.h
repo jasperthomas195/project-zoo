@@ -9,10 +9,11 @@ private:
     double mammalPrice; // Price of mammals
     double avianPrice; // Price of avians
     double zookeeperPrice;
+    double initialBalance;
 
 
 public:
-    Finances(); // Constructor
+    Finances(double initialBalance); // Constructor
     ~Finances(); // Destructor
 
     double getBalance() const; // Getter for balance

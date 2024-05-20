@@ -17,8 +17,8 @@ public:
     int getCapacity() const; // Getter for the maximum capacity of the enclosure
     int getAnimalCount() const; // Getter for the number of animals in the enclosure
 
-    bool addAnimal(Animal* animal); // Add an animal to the enclosure
-    bool removeAnimal(Animal* animal); // Remove an animal from the enclosure
+    bool addAnimal(Living_Animal* animal); // Add an animal to the enclosure
+    bool removeAnimal(Living_Animal* animal); // Remove an animal from the enclosure
 
     void upgradeCapacity(int additionalCapacity); // Upgrade the capacity of the enclosure
 };
