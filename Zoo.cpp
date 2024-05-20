@@ -1,0 +1,149 @@
+#include "Zoo.h"
+#include "Visitor.h"
+#include <algorithm>
+
+// Constructor
+Zoo::Zoo(double initial_balance)
+    : visitors_today(0),
+      average_visitor_satisfaction(0.0),
+      finances() {
+    finances.record_income(initial_balance); // Initialize zoo with starting balance
+    mammal_enclosure = Enclosure(15); // Default capacity
+    amphibian_enclosure = Enclosure(10); // Default capacity
+    avian_enclosure = Enclosure(20); // Default capacity
+}
+
+// Destructor
+Zoo::~Zoo() {
+    for (Visitor* visitor : visitors) {
+        delete visitor;
+    }
+    for (Living_Zookeeper* zookeeper : staff) {
+        delete zookeeper;
+    }
+}
+
+// Open the zoo for the day
+void Zoo::open_for_day() {
+    visitors_today = 0;
+    visitors.clear();
+    std::cout << "Zoo is now open for the day." << std::endl;
+}
+
+// Close the zoo for the day
+void Zoo::close_for_day() {
+    double daily_income = 0.0;
+    for (Visitor* visitor : visitors) {
+        daily_income += visitor->get_money_spent();
+    }
+    daily_income += calculate_daily_donations();  // Add donations to daily income
+    finances.record_income(daily_income);
+    average_visitor_satisfaction = calculate_average_visitor_satisfaction();
+    std::cout << "Zoo is now closed for the day." << std::endl;
+}
+
+// Admit a visitor to the zoo
+void Zoo::admit_visitor(Visitor* visitor) {
+    visitors_today++;
+    visitors.push_back(visitor);
+}
+
+// Manage animals in the zoo
+void Zoo::manage_animals() {
+    std::cout << "Managing animals in the zoo." << std::endl;
+}
+
+// Manage staff in the zoo
+void Zoo::manage_staff() {
+    std::cout << "Managing staff in the zoo." << std::endl;
+    hire_zookeeper();
+    fire_zookeeper();
+}
+
+// Sell an animal from the zoo
+void Zoo::sell_animal() {
+    std::cout << "Animal has been sold." << std::endl;
+}
+
+// Calculate daily donations from visitors
+int Zoo::calculate_daily_donations() const {
+    return Visitor::calculate_donations(visitors);
+}
+
+// Get the number of visitors today
+int Zoo::get_visitors_today() const {
+    return visitors_today;
+}
+
+// Get the average visitor satisfaction
+double Zoo::get_average_visitor_satisfaction() const {
+    return average_visitor_satisfaction;
+}
+
+// Get the zoo's balance
+double Zoo::get_zoo_balance() const {
+    return finances.get_balance();
+}
+
+// Private member functions to hire and fire zookeepers
+void Zoo::hire_zookeeper() {
+    Living_Zookeeper* zookeeper = new Living_Zookeeper("John", 20.0);
+    staff.push_back(zookeeper);
+    finances.record_expense(zookeeper->hourly_rate * 8); // Assume an 8-hour workday
+    std::cout << "Hired a new zookeeper." << std::endl;
+}
+
+void Zoo::fire_zookeeper() {
+    if (!staff.empty()) {
+        finances.record_expense(-staff.back()->hourly_rate * 8); // Refund the expense for the fired zookeeper
+        delete staff.back();
+        staff.pop_back();
+        std::cout << "Fired a zookeeper." << std::endl;
+    } else {
+        std::cout << "No zookeepers to fire." << std::endl;
+    }
+}
+
+// Private member functions to buy animals
+void Zoo::buy_amphibian() {
+    Living_Animal_Amphibian* amphibian = new Living_Animal_Amphibian("Frog", 0.1, 0.5, true);
+    if (amphibian_enclosure.add_animal(amphibian)) {
+        finances.record_expense(100); // Example expense for buying an amphibian
+        std::cout << "Bought a new amphibian." << std::endl;
+    } else {
+        std::cout << "No space for new amphibian." << std::endl;
+        delete amphibian;
+    }
+}
+
+void Zoo::buy_mammal() {
+    Living_Animal_Mammal* mammal = new Living_Animal_Mammal("Elephant", 3.0, 5000.0, true);
+    if (mammal_enclosure.add_animal(mammal)) {
+        finances.record_expense(5000); // Example expense for buying a mammal
+        std::cout << "Bought a new mammal." << std::endl;
+    } else {
+        std::cout << "No space for new mammal." << std::endl;
+        delete mammal;
+    }
+}
+
+void Zoo::buy_avian() {
+    Living_Animal_Avian* avian = new Living_Animal_Avian("Eagle", 1.0, 10.0, true);
+    if (avian_enclosure.add_animal(avian)) {
+        finances.record_expense(500); // Example expense for buying an avian
+        std::cout << "Bought a new avian." << std::endl;
+    } else {
+        std::cout << "No space for new avian." << std::endl;
+        delete avian;
+    }
+}
+
+// Helper function to calculate average visitor satisfaction
+double Zoo::calculate_average_visitor_satisfaction() const {
+    if (visitors.empty()) return 0.0;
+    double total_satisfaction = 0.0;
+    for (const Visitor* visitor : visitors) {
+        total_satisfaction += visitor->get_satisfaction_level();
+    }
+    return total_satisfaction / visitors.size();
+}
