@@ -16,3 +16,7 @@ void Finances::record_expense(double dollar_amount) {
 double Finances::calculate_net_profit() const {
     return total_income - total_expenses;
 }
+
+void Finances::get_balance() const {
+    return calculate_net_profit();
+}
