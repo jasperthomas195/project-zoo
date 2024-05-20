@@ -11,7 +11,7 @@ private:
     int capacity; // Maximum capacity of the enclosure
 
 public:
-    Enclosure(int initialCapacity); // Constructor
+    Enclosure(int initialCapacity = 15); // Constructor
     ~Enclosure(); // Destructor
 
     int getCapacity() const; // Getter for the maximum capacity of the enclosure

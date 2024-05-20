@@ -1,12 +1,13 @@
 #include "Enclosure.h"
 
 
-Enclosure::Enclosure(int initialCapacity) : capacity(initialCapacity) {
-    // Constructor implementation...
-}
+Enclosure::Enclosure(int initialCapacity) : capacity(initialCapacity) {}
 
 Enclosure::~Enclosure() {
-    // Destructor implementation...
+    for (Animal* animal : animals) {
+        delete animal;
+    }
+animals.clear();
 }
 
 int Enclosure::getCapacity() const {
