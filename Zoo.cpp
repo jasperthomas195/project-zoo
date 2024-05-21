@@ -50,14 +50,52 @@ void Zoo::admit_visitor(Visitor* visitor) {
 
 // Manage animals in the zoo
 void Zoo::manage_animals() {
-    std::cout << "Managing animals in the zoo." << std::endl;
+    int choice;
+    std::cout << "Manage Animals Menu:\n";
+    std::cout << "1. Buy Amphibian\n";
+    std::cout << "2. Buy Mammal\n";
+    std::cout << "3. Buy Avian\n";
+    std::cout << "4. Sell an animal\n";
+    std::cout << "Enter your choice: ";
+    std::cin >> choice;
+
+    switch(choice) {
+        case 1:
+            buy_amphibian();
+            break;
+        case 2:
+            buy_mammal();
+            break;
+        case 3:
+            buy_avian();
+            break;
+        case 4:
+            sell_animal();
+            break;
+        default:
+            std::cout << "Invalid choice\n";
+    }
 }
 
 // Manage staff in the zoo
 void Zoo::manage_staff() {
-    std::cout << "Managing staff in the zoo." << std::endl;
-    hire_zookeeper();
-    fire_zookeeper();
+    int choice;
+    std::cout << "Manage Staff Menu:\n";
+    std::cout << "1. Hire Zookeeper\n";
+    std::cout << "2. Fire Zookeeper\n";
+    std::cout << "Enter your choice: ";
+    std::cin >> choice;
+
+    switch(choice) {
+        case 1:
+            hire_zookeeper();
+            break;
+        case 2:
+            fire_zookeeper();
+            break;
+        default:
+            std::cout << "Invalid choice.\n";
+    }
 }
 
 // Sell an animal from the zoo
