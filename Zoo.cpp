@@ -127,7 +127,7 @@ void Zoo::sell_animal() {
             std::cin >> index;
             if (index >= 1 && index <= mammals.size()) {
                 Living_Animal* animalSold = mammals[index - 1];
-                double animalValue = .90 * 200; // Assuming getValue() method exists in Living_Animal
+                double animalValue = .90 * 5000; // Assuming getValue() method exists in Living_Animal
                 finances.updateBalance(animalValue);
                 delete animalSold;
                 mammals.erase(mammals.begin() + index - 1);
@@ -173,7 +173,7 @@ void Zoo::sell_animal() {
             std::cin >> index;
             if (index >= 1 && index <= avians.size()) {
                 Living_Animal* animalSold = avians[index - 1];
-                double animalValue = 0.90 * 150; // Assuming getValue() method exists in Living_Animal
+                double animalValue = 0.90 * 500; // Assuming getValue() method exists in Living_Animal
                 finances.updateBalance(animalValue);
                 delete animalSold;
                 avians.erase(avians.begin() + index - 1);
