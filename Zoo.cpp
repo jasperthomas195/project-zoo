@@ -128,7 +128,7 @@ void Zoo::sell_animal() {
             if (index >= 1 && index <= mammals.size()) {
                 Living_Animal* animalSold = mammals[index - 1];
                 double animalValue = .90 * 5000; // Assuming getValue() method exists in Living_Animal
-                finances.updateBalance(animalValue);
+                finances.record_income(animalValue);
                 delete animalSold;
                 mammals.erase(mammals.begin() + index - 1);
                 std::cout << "Mammal sold successfully, balance increased by $" << animalValue << ".\n";
@@ -151,7 +151,7 @@ void Zoo::sell_animal() {
             if (index >= 1 && index <= amphibians.size()) {
                 Living_Animal* animalSold = amphibians[index - 1];
                 double animalValue = .90 * 100; // Assuming getValue() method exists in Living_Animal
-                finances.updateBalance(animalValue);
+                finances.record_income(animalValue);
                 delete animalSold;
                 amphibians.erase(amphibians.begin() + index - 1);
                 std::cout << "Amphibian sold successfully, balance increased by $" << animalValue << ".\n";
@@ -174,7 +174,7 @@ void Zoo::sell_animal() {
             if (index >= 1 && index <= avians.size()) {
                 Living_Animal* animalSold = avians[index - 1];
                 double animalValue = 0.90 * 500; // Assuming getValue() method exists in Living_Animal
-                finances.updateBalance(animalValue);
+                finances.record_income(animalValue);
                 delete animalSold;
                 avians.erase(avians.begin() + index - 1);
                 std::cout << "Avian sold successfully, balance increased by $" << animalValue << ".\n";
