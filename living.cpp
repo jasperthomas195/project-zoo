@@ -10,7 +10,7 @@ class living {
 }
 
 
-class living_Zookeeper:public living{
+class living_Zookeeper:public living {
     public:
  double hourly_rate;
 }
@@ -26,21 +26,21 @@ int visitors_per_hour;
 double height;
 double weight;
 
-void hunger_rate(height,weight){
+void hunger_rate(double height,double weight){
 
 float hungerrate=(height*weight)/100;
-return hungerrate 
+return float hungerrate;
 
 }
 
-void hunger_happines_relationship(hunger_level){
-if hunger_level<50 
+void hunger_happines_relationship(int hunger_level){
+if (hunger_level)<50; 
 while(hunger_level<50){
 
     happiness_level-1
 
     cout << happiness_level;
-    return 0;
+    return ;
 }
 
 
@@ -49,16 +49,16 @@ void cleanliness_happinesss_relationship(){
 
 while(cleanliness<50){
 happiness_level-1
-cout<< happiness_level;
-return 0
+cout << happiness_level ;
+return;
 }
 }
 
-void feed(food)[
-hunger_level=100
+void feed(food){
+( hunger_level )=100;
 
-]
 
+}
 }
 class living_animal_mammal:public living_animal {
 public:
@@ -66,11 +66,9 @@ bool need_shelter;
 
 void mammal_cleanliness(height,weight){
     (height + weight)/100;
-    return:0
+    return;
 
 }
 
 
-}
-
-
+;}
