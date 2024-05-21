@@ -73,6 +73,8 @@ void Zoo::manage_animals() {
         case 4:
             sell_animal();
             break;
+        case 5:
+            feed_animals()'
         default:
             std::cout << "Invalid choice\n";
     }
