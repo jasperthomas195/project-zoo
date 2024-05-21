@@ -56,6 +56,7 @@ void Zoo::manage_animals() {
     std::cout << "2. Buy Mammal\n";
     std::cout << "3. Buy Avian\n";
     std::cout << "4. Sell an animal\n";
+    std::cout << "5. Feed animals\n";
     std::cout << "Enter your choice: ";
     std::cin >> choice;
 
