@@ -100,7 +100,93 @@ void Zoo::manage_staff() {
 
 // Sell an animal from the zoo
 void Zoo::sell_animal() {
-    std::cout << "Animal has been sold." << std::endl;
+    if (mammals.empty() && avians.empty() && amphibians.empty()) {
+        std::cout << "There are no animals to sell.\n";
+        return;
+    }
+
+    std::cout << "Choose the type of animal you want to sell:\n";
+    std::cout << "1. Mammals\n";
+    std::cout << "2. Amphibians\n";
+    std::cout << "3. Avians\n";
+    int type_choice;
+    std::cin >> type_choice;
+
+    int index;
+    switch (type_choice) {
+        case 1:
+            if (mammals.empty()) {
+                std::cout << "No mammals available for sale.\n";
+                return;
+            }
+            std::cout << "Mammals available for sale:\n";
+            for (int i = 0; i < mammals.size(); ++i) {
+                std::cout << i + 1 << " | " << mammals[i] << std::endl;
+            }
+            std::cout << "Enter the index of the mammal you want to sell (1 - " << mammals.size() << "): ";
+            std::cin >> index;
+            if (index >= 1 && index <= mammals.size()) {
+                Living_Animal* animalSold = mammals[index - 1];
+                double animalValue = .90 * 200; // Assuming getValue() method exists in Living_Animal
+                finances.updateBalance(animalValue);
+                delete animalSold;
+                mammals.erase(mammals.begin() + index - 1);
+                std::cout << "Mammal sold successfully, balance increased by $" << animalValue << ".\n";
+            } else {
+                std::cout << "Invalid index\n";
+            }
+            break;
+
+        case 2:
+            if (amphibians.empty()) {
+                std::cout << "No amphibians available for sale.\n";
+                return;
+            }
+            std::cout << "Amphibians available for sale:\n";
+            for (int i = 0; i < amphibians.size(); ++i) {
+                std::cout << i + 1 << " | " << amphibians[i] << std::endl;
+            }
+            std::cout << "Enter the index of the amphibian you want to sell (1 - " << amphibians.size() << "): ";
+            std::cin >> index;
+            if (index >= 1 && index <= amphibians.size()) {
+                Living_Animal* animalSold = amphibians[index - 1];
+                double animalValue = .90 * 100; // Assuming getValue() method exists in Living_Animal
+                finances.updateBalance(animalValue);
+                delete animalSold;
+                amphibians.erase(amphibians.begin() + index - 1);
+                std::cout << "Amphibian sold successfully, balance increased by $" << animalValue << ".\n";
+            } else {
+                std::cout << "Invalid index\n";
+            }
+            break;
+
+        case 3:
+            if (avians.empty()) {
+                std::cout << "No avians available for sale.\n";
+                return;
+            }
+            std::cout << "Avians available for sale:\n";
+            for (int i = 0; i < avians.size(); ++i) {
+                std::cout << i + 1 << " | " << avians[i] << std::endl;
+            }
+            std::cout << "Enter the index of the avian you want to sell (1 - " << avians.size() << "): ";
+            std::cin >> index;
+            if (index >= 1 && index <= avians.size()) {
+                Living_Animal* animalSold = avians[index - 1];
+                double animalValue = 0.90 * 150; // Assuming getValue() method exists in Living_Animal
+                finances.updateBalance(animalValue);
+                delete animalSold;
+                avians.erase(avians.begin() + index - 1);
+                std::cout << "Avian sold successfully, balance increased by $" << animalValue << ".\n";
+            } else {
+                std::cout << "Invalid index\n";
+            }
+            break;
+
+        default:
+            std::cout << "Invalid choice\n";
+            break;
+    }
 }
 
 // Calculate daily donations from visitors
