@@ -77,7 +77,8 @@ void Zoo::close_for_day() {
     finances.record_income(daily_income);
     average_visitor_satisfaction = calculate_average_visitor_satisfaction();
     std::cout << "Zoo is now closed for the day.\n";
-    std::cout << "Money made today: $" << daily_income << std::endl;
+    std::cout << "Average visitor satisfaction for the day: " << get_average_visitor_satisfaction() << std::endl;
+    std::cout << "Daily income: $" << daily_income << std::endl;
     std::cout << "Current balance: $" << finances.get_balance();
 }
 

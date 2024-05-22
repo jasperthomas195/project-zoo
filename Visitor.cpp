@@ -4,6 +4,9 @@
 
 // Constructor
 Visitor::Visitor() : satisfaction_level(70), money_spent(20) {
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+    // Set a random satisfaction level between 50 and 100
+    satisfaction_level = std::rand() % 51 + 50;
     // Initial money spent includes the admission fee
 }
 
