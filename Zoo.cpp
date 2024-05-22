@@ -26,39 +26,33 @@ Zoo::~Zoo() {
 
 // Open the zoo for the day
 void Zoo::open_for_day() {
-
-    for (Living_Animal* animal : mammals) {
-    animal->decrease_levels();
-    }
-
-    for (Living_Animal* animal : amphibians) {
-    animal->decrease_levels();
-    }
-
-    for (Living_Animal* animal : avians) {
-    animal->decrease_levels();
-    }
-
+    int num_zookeepers = staff.size();
+    int zookeeper_cost = num_zookeepers * 200;
     visitors_today = 0;
     visitors.clear();
 
-    // Generate a random number of visitors
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(50, 100); // Assuming a range between 50 and 100 visitors
-    int num_visitors = dist(gen);
+    for (Living_Animal* animal : mammals) {
+    animal->decrease_levels(num_zookeepers);
+    }
 
+    for (Living_Animal* animal : amphibians) {
+    animal->decrease_levels(num_zookeepers);
+    }
+
+    for (Living_Animal* animal : avians) {
+    animal->decrease_levels(num_zookeepers);
+    }
+
+    int num_visitors = rand() % 100 + 1;
     // Add the visitors
     for (int i = 0; i < num_visitors; ++i) {
         Visitor* newVisitor = new Visitor(); // Assuming default constructor for Visitor
         admit_visitor(newVisitor);
     }
 
+    finances.record_expense(zookeeper_cost);
     std::cout << "Zoo is now open for the day with " << num_visitors << " visitors." << std::endl;
 }
-
-
-
 
 // Close the zoo for the day
 void Zoo::close_for_day() {
@@ -79,10 +73,12 @@ void Zoo::close_for_day() {
         daily_income += visitor->get_money_spent();
     }
     daily_income += calculate_daily_donations();  // Add donations to daily income
+    daily_income += calculate_animal_income();
     finances.record_income(daily_income);
     average_visitor_satisfaction = calculate_average_visitor_satisfaction();
-    std::cout << "Zoo is now closed for the day." << std::endl;
-    std::cout << "Current balance of zoo: " << finances.get_balance();
+    std::cout << "Zoo is now closed for the day.\n";
+    std::cout << "Money made today: $" << daily_income << std::endl;
+    std::cout << "Current balance: $" << finances.get_balance();
 }
 
 // Admit a visitor to the zoo
@@ -138,6 +134,7 @@ void Zoo::manage_staff() {
     std::cout << "Manage Staff Menu:\n";
     std::cout << "1. Hire Zookeeper\n";
     std::cout << "2. Fire Zookeeper\n";
+    std::cout << "3. Status of zookeepers\n";
     std::cout << "Enter your choice: ";
     std::cin >> choice;
 
@@ -147,6 +144,9 @@ void Zoo::manage_staff() {
             break;
         case 2:
             fire_zookeeper();
+            break;
+        case 3:
+            zookeeper_status();
             break;
         default:
             std::cout << "Invalid choice.\n";
@@ -284,6 +284,10 @@ void Zoo::fire_zookeeper() {
     }
 }
 
+void Zoo::zookeeper_status() {
+    std::cout << "Number of Zookeepers: " << staff.size() << std::endl;
+}
+
 // Private member functions to buy animals
 void Zoo::buy_amphibian(const std::string& name) {
     double price = 100;
@@ -306,12 +310,12 @@ void Zoo::buy_amphibian(const std::string& name) {
 void Zoo::buy_mammal(const std::string& name) {
     double price = 5000;
     if (finances.get_balance() >= price) {
-        Living_Animal_Mammal* newMammal = new Living_Animal_Mammal(name, 1.0, 1.0, true); // Example: all mammals need shelter
+        Living_Animal_Mammal* newMammal = new Living_Animal_Mammal(name, 3.0, 1.0, true); // Example: all mammals need shelter
         if (mammal_enclosure.add_animal(newMammal)) {
             mammals.push_back(newMammal);
             finances.record_expense(price);
             std::cout << "Bought a new mammal named " << name << "!" << std::endl;
-            std::cout << "Current number of mammal: " << mammals.size() << std::endl;
+            std::cout << "Current number of mammals: " << mammals.size() << std::endl;
         } else {
             std::cout << "Enclosure is full, cannot add new mammal!" << std::endl;
             delete newMammal;
@@ -363,4 +367,18 @@ double Zoo::calculate_average_visitor_satisfaction() const {
         total_satisfaction += visitor->get_satisfaction_level();
     }
     return total_satisfaction / visitors.size();
+}
+
+double Zoo::calculate_animal_income() const {
+    double total_income = 0.0;
+    for (const auto& mammal : mammals) {
+        total_income += mammal->get_visitors_per_hour() * 25; // Example: each visitor contributes $10
+    }
+    for (const auto& amphibian : amphibians) {
+        total_income += amphibian->get_visitors_per_hour() * 4; // Example: each visitor contributes $5
+    }
+    for (const auto& avian : avians) {
+        total_income += avian->get_visitors_per_hour() * 10; // Example: each visitor contributes $7
+    }
+    return total_income;
 }

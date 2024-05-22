@@ -48,6 +48,7 @@ public:
     // Change access level to public for testing
     void hire_zookeeper();
     void fire_zookeeper();
+    void zookeeper_status();
     void buy_amphibian(const std::string& name);
     void buy_mammal(const std::string& name);
     void buy_avian(const std::string& name);
@@ -57,6 +58,8 @@ public:
     const Enclosure& get_amphibian_enclosure() const { return amphibian_enclosure; }
     const Enclosure& get_avian_enclosure() const { return avian_enclosure; }
     void show_animal_status();
+    double calculate_animal_income() const;
+
 };
 
 #endif
