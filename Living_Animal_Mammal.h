@@ -12,6 +12,8 @@ public:
 
     // Member functions
     int mammal_cleanliness() const;
+
+    void decrease_levels();
 };
 
 #endif

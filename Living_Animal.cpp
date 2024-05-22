@@ -18,11 +18,40 @@ void Living_Animal::hunger_happiness_relationship() {
     }
 }
 
+float Living_Animal::get_hunger_level() const {
+    return hunger_level;
+}
+
+
+// Get happiness level
+float Living_Animal::get_happiness_level() const {
+    return happiness_level;
+}
+
 // Adjust happiness based on cleanliness
 void Living_Animal::cleanliness_happiness_relationship(int cleanliness) {
     while (cleanliness < 50) {
         happiness_level--;
         std::cout << "Happiness level: " << happiness_level << std::endl;
+    }
+}
+
+void Living_Animal::decrease_levels() {
+    // Decrease hunger level
+    if (hunger_level > 0) {
+        hunger_level -= 10; // Example decrease rate, adjust as needed
+    }
+    // Decrease happiness level
+    if (happiness_level > 0) {
+        happiness_level -= 5; // Example decrease rate, adjust as needed
+    }
+}
+
+void Living_Animal::check_levels() {
+    if (hunger_level < 0) {
+        hunger_level = 0; // Ensure hunger level doesn't go below 0
+    } else if (hunger_level == 100) {
+        happiness_level = 100; // Reset happiness level to 100 when hunger level reaches 100
     }
 }
 

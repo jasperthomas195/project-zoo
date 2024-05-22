@@ -21,6 +21,8 @@ public:
     bool remove_animal(Living_Animal* animal); // Remove an animal from the enclosure
 
     void upgrade_capacity(int additionalCapacity); // Upgrade the capacity of the enclosure
+    void feed_animals();
+    void show_animal_status() const;
 };
 
 #endif

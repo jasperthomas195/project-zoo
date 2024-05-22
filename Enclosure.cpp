@@ -40,6 +40,20 @@ bool Enclosure::remove_animal(Living_Animal* animal) {
     return false; // Animal not found in enclosure
 }
 
+void Enclosure::feed_animals() {
+    for (Living_Animal* animal : animals) {
+        animal->feed(100);  // Reset hunger level
+    }
+}
+
+void Enclosure::show_animal_status() const {
+    for (size_t i = 0; i < animals.size(); ++i) {
+        std::cout << i + 1 << " | " << animals[i]->name
+                  << " | Hunger Level: " << animals[i]->get_hunger_level()
+                  << " | Happiness Level: " << animals[i]->get_happiness_level() << std::endl;
+    }
+}
+
 // Upgrade the capacity of the enclosure
 void Enclosure::upgrade_capacity(int additionalCapacity) {
     capacity += additionalCapacity;

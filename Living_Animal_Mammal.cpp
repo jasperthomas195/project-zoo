@@ -7,4 +7,6 @@ Living_Animal_Mammal::Living_Animal_Mammal(const std::string& name, double heigh
 // Calculate cleanliness
 int Living_Animal_Mammal::mammal_cleanliness() const {
     return (height + weight) / 100;
+
+
 }
