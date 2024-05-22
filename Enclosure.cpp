@@ -1,24 +1,28 @@
 #include "Enclosure.h"
 
-
+// Constructor
 Enclosure::Enclosure(int initialCapacity) : capacity(initialCapacity) {}
 
+// Destructor
 Enclosure::~Enclosure() {
     for (Living_Animal* animal : animals) {
         delete animal;
     }
-animals.clear();
+    animals.clear();
 }
 
-int Enclosure::getCapacity() const {
+// Getter for the maximum capacity of the enclosure
+int Enclosure::get_capacity() const {
     return capacity;
 }
 
-int Enclosure::getAnimalCount() const {
+// Getter for the number of animals in the enclosure
+int Enclosure::get_animal_count() const {
     return animals.size();
 }
 
-bool Enclosure::addAnimal(Living_Animal* animal) {
+// Add an animal to the enclosure
+bool Enclosure::add_animal(Living_Animal* animal) {
     if (animals.size() < capacity) {
         animals.push_back(animal);
         return true;
@@ -26,7 +30,8 @@ bool Enclosure::addAnimal(Living_Animal* animal) {
     return false; // Unable to add animal, enclosure at maximum capacity
 }
 
-bool Enclosure::removeAnimal(Living_Animal* animal) {
+// Remove an animal from the enclosure
+bool Enclosure::remove_animal(Living_Animal* animal) {
     auto it = std::find(animals.begin(), animals.end(), animal);
     if (it != animals.end()) {
         animals.erase(it);
@@ -35,6 +40,7 @@ bool Enclosure::removeAnimal(Living_Animal* animal) {
     return false; // Animal not found in enclosure
 }
 
-void Enclosure::upgradeCapacity(int additionalCapacity) {
+// Upgrade the capacity of the enclosure
+void Enclosure::upgrade_capacity(int additionalCapacity) {
     capacity += additionalCapacity;
 }

@@ -1,39 +1,24 @@
 #include "Finances.h"
 
-Finances::Finances(double initialBalance) : balance(0.0), amphibianPrice(100.0), mammalPrice(200.0), avianPrice(150.0), zookeeperPrice(240.0) {
+// Constructor
+Finances::Finances() : total_income(0), total_expenses(0) {}
+
+// Function to record income
+void Finances::record_income(double dollar_amount) {
+    total_income += dollar_amount;
 }
 
-Finances::~Finances() {
+// Function to record expenses
+void Finances::record_expense(double dollar_amount) {
+    total_expenses += dollar_amount;
 }
 
-double Finances::getBalance() const {
-    return balance;
+// Function to calculate net profit
+double Finances::calculate_net_profit() const {
+    return total_income - total_expenses;
 }
 
-double Finances::getAmphibianPrice() const {
-    return amphibianPrice;
-}
-
-double Finances::getMammalPrice() const {
-    return mammalPrice;
-}
-
-double Finances::getAvianPrice() const {
-    return avianPrice;
-}
-
-double Finances::getZookeeperPrice() const {
-    return zookeeperPrice;
-}
-
-void Finances::updateBalance(double amount) {
-    balance += amount;
-}
-
-void Finances::deductExpense(double expense) {
-    balance -= expense;
-}
-
-void Finances::addRevenue(double revenue) {
-    balance += revenue;
+// Function to get the balance
+double Finances::get_balance() const {
+    return calculate_net_profit();
 }

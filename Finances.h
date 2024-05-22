@@ -1,32 +1,26 @@
-
 #ifndef FINANCES_H
 #define FINANCES_H
 
 class Finances {
 private:
-    double balance; // Current balance
-    double amphibianPrice; // Price of amphibians
-    double mammalPrice; // Price of mammals
-    double avianPrice; // Price of avians
-    double zookeeperPrice;
-    double initialBalance;
-
+    double total_income;
+    double total_expenses;
 
 public:
-    Finances(double initialBalance); // Constructor
-    ~Finances(); // Destructor
+    // Constructor
+    Finances();
 
-    double getBalance() const; // Getter for balance
-    double getAmphibianPrice() const; // Getter for amphibian price
-    double getMammalPrice() const; // Getter for mammal price
-    double getAvianPrice() const; // Getter for avian price
-    double getZookeeperPrice() const;
+    // Function to record income
+    void record_income(double dollar_amount);
 
+    // Function to record expenses
+    void record_expense(double dollar_amount);
 
-    void updateBalance(double amount); // Function to update the balance
-    void deductExpense(double expense); // Function to deduct an expense from the balance
-    void addRevenue(double revenue); // Function to add revenue to the balance
-    void handleVisitorPurchase(double purchaseAmount); // Function to handle visitor purchases
+    // Function to calculate net profit
+    double calculate_net_profit() const;
+
+    // Function to get the balance
+    double get_balance() const;
 };
 
-#endif 
+#endif // FINANCES_H

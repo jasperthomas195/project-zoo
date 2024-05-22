@@ -1,51 +1,54 @@
 #include "Zoo.h"
+#include "Visitor.h"
+#include <algorithm>
 
-Zoo::Zoo(double initialBalance)
-    : finances(initialBalance), mammalEnclosure(15), amphibianEnclosure(15), avianEnclosure(15),
-      visitors_today(0){}
+// Constructor
+Zoo::Zoo(double initial_balance)
+    : visitors_today(0),
+      average_visitor_satisfaction(0.0),
+      finances() {
+    finances.record_income(initial_balance); // Initialize zoo with starting balance
+    mammal_enclosure = Enclosure(15); // Default capacity
+    amphibian_enclosure = Enclosure(10); // Default capacity
+    avian_enclosure = Enclosure(20); // Default capacity
+}
 
-
+// Destructor
 Zoo::~Zoo() {
-    for (auto visitor : visitors) {
+    for (Visitor* visitor : visitors) {
         delete visitor;
     }
-    for (auto animal : animals) {
-        delete animal;
-    }
-    for (auto staff : staff) {
-        delete staff;
-    }
-    for (auto enclosure : enclosure) {
-        delete enclosure;
+    for (Living_Zookeeper* zookeeper : staff) {
+        delete zookeeper;
     }
 }
 
+// Open the zoo for the day
 void Zoo::open_for_day() {
-    double zookeeperCost = staff.size() * 240.0;
-    finances.deductExpense(zookeeperCost);
-    std::cout << "Current balance of the zoo: $" << finances.getBalance() << std::endl;
-    std::cout << "Number of Mammals: " << mammals.size() << std::endl;
-    std::cout << "Number of Amphibians: " << amphibians.size() << std::endl;
-    std::cout << "Number of Avians: " << avians.size() << std::endl;
-    std::cout << "Current number of zookeepers: " << staff.size() << std::endl;
+    visitors_today = 0;
     visitors.clear();
-    visitors_today = 0; 
+    std::cout << "Zoo is now open for the day." << std::endl;
 }
 
+// Close the zoo for the day
 void Zoo::close_for_day() {
-    finances.updateBalance(visitors.size());
-    std::cout << "Current balance of the zoo: $" << finances.getBalance() << std::endl;
-    std::cout << "Number of Mammals: " << mammals.size() << std::endl;
-    std::cout << "Number of Amphibians: " << amphibians.size() << std::endl;
-    std::cout << "Number of Avians: " << avians.size() << std::endl;
-    std::cout << "Current number of zookeepers: " << staff.size() << std::endl;
+    double daily_income = 0.0;
+    for (Visitor* visitor : visitors) {
+        daily_income += visitor->get_money_spent();
+    }
+    daily_income += calculate_daily_donations();  // Add donations to daily income
+    finances.record_income(daily_income);
+    average_visitor_satisfaction = calculate_average_visitor_satisfaction();
+    std::cout << "Zoo is now closed for the day." << std::endl;
 }
 
+// Admit a visitor to the zoo
 void Zoo::admit_visitor(Visitor* visitor) {
+    visitors_today++;
     visitors.push_back(visitor);
-    visitors_today = visitors_size();
 }
 
+// Manage animals in the zoo
 void Zoo::manage_animals() {
     int choice;
     std::cout << "Manage Animals Menu:\n";
@@ -53,6 +56,7 @@ void Zoo::manage_animals() {
     std::cout << "2. Buy Mammal\n";
     std::cout << "3. Buy Avian\n";
     std::cout << "4. Sell an animal\n";
+    std::cout << "5. Feed animals\n";
     std::cout << "Enter your choice: ";
     std::cin >> choice;
 
@@ -69,80 +73,14 @@ void Zoo::manage_animals() {
         case 4:
             sell_animal();
             break;
+        case 5:
+            
         default:
             std::cout << "Invalid choice\n";
     }
 }
-void Zoo::buy_amphibian() {
-    double price = finances.getAmphibianPrice();
-    if (finances.getBalance() >= price) {
-        Living_Animal_Amphibian* newAmphibian = new Living_Animal_Amphibian("Amphibian", 1.0, 1.0, true);
-        if (enclosure.addAnimal(newAmphibian)) {
-            animals.push_back(newAmphibian);
-            finances.deductExpense(price);
-            std::cout << "Bought a new Amphibian!" << std::endl;
-        } else {
-            std::cout << "Enclosure is full, cannot add new Amphibian!" << std::endl;
-            delete newAmphibian;
-        }
-    } else {
-        std::cout << "Not enough funds to buy a new amphibian!" << std::endl;
-    }
-}
 
-void Zoo::buy_mammal() {
-    double price = finances.getMammalPrice();
-    if (finances.getBalance() >= price) {
-        Living_Animal_Mammal* newMammal = new Living_Animal_Mammal("Mammal", 1.0, 1.0, true); // Example: all mammals need shelter
-        if (mammalEnclosure.addAnimal(newMammal)) {
-            mammals.push_back(newMammal);
-            finances.deductExpense(price);
-            std::cout << "Bought a new mammal!" << std::endl;
-        } else {
-            std::cout << "Enclosure is full, cannot add new mammal!" << std::endl;
-            delete newMammal;
-        }
-    } else {
-        std::cout << "Not enough funds to buy a new mammal!" << std::endl;
-    }
-}
-void Zoo::buy_avian() {
-    if (finances.getBalance() < avianPrice) {
-        std::cout << "Not enough funds to buy an avian.\n";
-        return;
-    }
-    finances.deductExpense(avianPrice);
-    Living_Animal_Avian* avian = new Living_Animal_Avian();
-    animals.push_back(avian);
-    std::cout << "Avian bought successfully.\n";
-}
-void Zoo::sell_animal() {
-    if (animals.empty()) {
-        std::cout << "There are no animals to sell.\n";
-        return;
-    }
-
-    int index;
-    std::cout << "Animals available for sale:\n";
-    for (int i = 0; i < animals.size(); i++) {
-        std::cout << i + 1 << " | " << animals[i]->getName() << std::endl;
-    }
-
-    std::cout << "Enter the index of the animal you want to sell (1 - " << animals.size() << "): ";
-    std::cin >> index;
-
-    if (index >= 1 && index <= animals.size()) {
-        Living_Animal* animalSold = animals[index - 1];
-        double animalValue = animalSold->getValue();
-        finances.updateBalance(animalValue);
-        delete animalSold;
-        animals.erase(animals.begin() + index - 1);
-        std::cout << "Animal sold successfully, balance increased by $" << animalValue << ".\n";
-    } else {
-        std::cout << "Invalid index\n";
-    }
-}
-
+// Manage staff in the zoo
 void Zoo::manage_staff() {
     int choice;
     std::cout << "Manage Staff Menu:\n";
@@ -162,48 +100,199 @@ void Zoo::manage_staff() {
             std::cout << "Invalid choice.\n";
     }
 }
-void Zoo::hire_zookeeper() {
-    if (finances.getBalance() < finances.getZookeeperPrice()) {
-        std::cout << "Not enough funds to hire a zookeeper.\n";
+
+// Sell an animal from the zoo
+void Zoo::sell_animal() {
+    if (mammals.empty() && avians.empty() && amphibians.empty()) {
+        std::cout << "There are no animals to sell.\n";
         return;
     }
-    finances.deductExpense(finances.getZookeeperPrice());
-    Living_Zookeeper* zookeeper = new Living_Zookeeper();
-    staff.push_back(zookeeper);
-    std::cout << "Zookeeper hired successfully.\n";
-}
-void Zoo::fire_zookeeper() {
-if (staff.empty()) {
-    std::cout << "There are no zookeepers to fire.\n";
-    return;
-    }
+
+    std::cout << "Choose the type of animal you want to sell:\n";
+    std::cout << "1. Mammals\n";
+    std::cout << "2. Amphibians\n";
+    std::cout << "3. Avians\n";
+    std::cout << "Enter your choice: ";
+    int type_choice;
+    std::cin >> type_choice;
+
     int index;
-    std::cout << "Zookeepers available for firing:\n";
-    for (int i = 0; i < staff.size(); i++) {
-        std::cout << i + 1 << " | " << staff[i] << std::endl;
+    switch (type_choice) {
+        case 1:
+            if (mammals.empty()) {
+                std::cout << "No mammals available for sale.\n";
+                return;
+            }
+            std::cout << "Mammals available for sale:\n";
+            for (int i = 0; i < mammals.size(); ++i) {
+                std::cout << i + 1 << " | " << mammals[i] << std::endl;
+            }
+            std::cout << "Enter the index of the mammal you want to sell (1 - " << mammals.size() << "): ";
+            std::cin >> index;
+            if (index >= 1 && index <= mammals.size()) {
+                Living_Animal* animalSold = mammals[index - 1];
+                double animalValue = .90 * 5000; // Assuming getValue() method exists in Living_Animal
+                finances.record_income(animalValue);
+                delete animalSold;
+                mammals.erase(mammals.begin() + index - 1);
+                std::cout << "Mammal sold successfully, balance increased by $" << animalValue << ".\n";
+            } else {
+                std::cout << "Invalid index\n";
+            }
+            break;
+
+        case 2:
+            if (amphibians.empty()) {
+                std::cout << "No amphibians available for sale.\n";
+                return;
+            }
+            std::cout << "Amphibians available for sale:\n";
+            for (int i = 0; i < amphibians.size(); ++i) {
+                std::cout << i + 1<< " | " << amphibians[i] << std::endl;
+            }
+            std::cout << "Enter the index of the amphibian you want to sell (1 - " << amphibians.size() << "): ";
+            std::cin >> index;
+            if (index >= 1 && index <= amphibians.size()) {
+                Living_Animal* animalSold = amphibians[index - 1];
+                double animalValue = .90 * 100; // Assuming getValue() method exists in Living_Animal
+                finances.record_income(animalValue);
+                delete animalSold;
+                amphibians.erase(amphibians.begin() + index - 1);
+                std::cout << "Amphibian sold successfully, balance increased by $" << animalValue << ".\n";
+            } else {
+                std::cout << "Invalid index\n";
+            }
+            break;
+
+        case 3:
+            if (avians.empty()) {
+                std::cout << "No avians available for sale.\n";
+                return;
+            }
+            std::cout << "Avians available for sale:\n";
+            for (int i = 0; i < avians.size(); ++i) {
+                std::cout << i + 1 << " | " << avians[i] << std::endl;
+            }
+            std::cout << "Enter the index of the avian you want to sell (1 - " << avians.size() << "): ";
+            std::cin >> index;
+            if (index >= 1 && index <= avians.size()) {
+                Living_Animal* animalSold = avians[index - 1];
+                double animalValue = 0.90 * 500; // Assuming getValue() method exists in Living_Animal
+                finances.record_income(animalValue);
+                delete animalSold;
+                avians.erase(avians.begin() + index - 1);
+                std::cout << "Avian sold successfully, balance increased by $" << animalValue << ".\n";
+            } else {
+                std::cout << "Invalid index\n";
+            }
+            break;
+
+        default:
+            std::cout << "Invalid choice\n";
+            break;
     }
+}
 
-    std::cout << "Enter the index of the zookeeper you want to fire (1 - " << staff.size() << "): ";
-    std::cin >> index;
+// Calculate daily donations from visitors
+int Zoo::calculate_daily_donations() const {
+    return Visitor::calculate_donations(visitors);
+}
 
-    if (index >= 1 && index <= staff.size()) {
-        finances.update_balance(SELL_ZOOKEEPER);
-        Living_Zookeeper* zookeeperFired = staff[index - 1];
-        delete zookeeperFired;
-        staff.erase(staff.begin() + index - 1);
-        std::cout << "Zookeeper fired successfully. Balance increased by $" << SELL_ZOOKEEPER << ".\n";
+// Get the number of visitors today
+int Zoo::get_visitors_today() const {
+    return visitors_today;
+}
+
+// Get the average visitor satisfaction
+double Zoo::get_average_visitor_satisfaction() const {
+    return average_visitor_satisfaction;
+}
+
+// Get the zoo's balance
+double Zoo::get_zoo_balance() const {
+    return finances.get_balance();
+}
+
+// Private member functions to hire and fire zookeepers
+void Zoo::hire_zookeeper() {
+    Living_Zookeeper* zookeeper = new Living_Zookeeper("John", 20.0);
+    staff.push_back(zookeeper);
+    finances.record_expense(zookeeper->hourly_rate * 8); // Assume an 8-hour workday
+    std::cout << "Hired a new zookeeper." << std::endl;
+}
+
+void Zoo::fire_zookeeper() {
+    if (!staff.empty()) {
+        finances.record_expense(-staff.back()->hourly_rate * 8); // Refund the expense for the fired zookeeper
+        delete staff.back();
+        staff.pop_back();
+        std::cout << "Fired a zookeeper." << std::endl;
     } else {
-        std::cout << "Invalid index\n";
+        std::cout << "No zookeepers to fire." << std::endl;
     }
 }
 
-void Zoo::save_game() {
+// Private member functions to buy animals
+void Zoo::buy_amphibian() {
+    double price = 100;
+    if (finances.get_balance() >= price) {
+        Living_Animal_Amphibian* newAmphibian = new Living_Animal_Amphibian("Amphibian", 1.0, 1.0, true); // Example: all mammals need shelter
+        if (amphibian_enclosure.add_animal(newAmphibian)) {
+            amphibians.push_back(newAmphibian);
+            finances.record_expense(price);
+            std::cout << "Bought a new amphibian!" << std::endl;
+            std::cout << "Current number of amphibians: " << amphibians.size() << std::endl;
+        } else {
+            std::cout << "Enclosure is full, cannot add new amphibian!" << std::endl;
+            delete newAmphibian;
+        }
+    } else {
+        std::cout << "Not enough funds to buy a new mammal!" << std::endl;
+    }
 }
 
-int Zoo::getVisitorsToday() const {
-    std::cout << "Visitors today:" << visitors_today;
+void Zoo::buy_mammal() {
+    double price = 5000;
+    if (finances.get_balance() >= price) {
+        Living_Animal_Mammal* newMammal = new Living_Animal_Mammal("Mammal", 5.0, 4.0, true); // Example: all mammals need shelter
+        if (mammal_enclosure.add_animal(newMammal)) {
+            mammals.push_back(newMammal);
+            finances.record_expense(price);
+            std::cout << "Bought a new mammal!" << std::endl;
+            std::cout << "Current number of mammals: " << mammals.size() << std::endl;
+        } else {
+            std::cout << "Enclosure is full, cannot add new mammal!" << std::endl;
+            delete newMammal;
+        }
+    } else {
+        std::cout << "Not enough funds to buy a new mammal!" << std::endl;
+    }
 }
 
-double Zoo::getAverageVisitorSatisfaction() const {
-    std::cout << "Average visitor satisfaction today:" << average_visitor_satisfaction;
+void Zoo::buy_avian() {
+    double price = 500;
+    if (finances.get_balance() >= price) {
+        Living_Animal_Avian* newAvian = new Living_Animal_Avian("Avian", 2.0, 1.0, true); // Example: all mammals need shelter
+        if (avian_enclosure.add_animal(newAvian)) {
+            avians.push_back(newAvian);
+            finances.record_expense(price);
+            std::cout << "Bought a new avian!" << std::endl;
+            std::cout << "Current number of avians: " << avians.size() << std::endl;
+        } else {
+            std::cout << "Enclosure is full, cannot add new avian!" << std::endl;
+            delete newAvian;
+        }
+    } else {
+        std::cout << "Not enough funds to buy a new avian!" << std::endl;
+    }
+}
+
+// Helper function to calculate average visitor satisfaction
+double Zoo::calculate_average_visitor_satisfaction() const {
+    if (visitors.empty()) return 0.0;
+    double total_satisfaction = 0.0;
+    for (const Visitor* visitor : visitors) {
+        total_satisfaction += visitor->get_satisfaction_level();
+    }
+    return total_satisfaction / visitors.size();
 }

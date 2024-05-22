@@ -2,8 +2,8 @@
 #define ENCLOSURE_H
 
 #include <vector>
+#include <algorithm>
 #include "Living_Animal.h"
-#include <iostream>
 
 class Enclosure {
 private:
@@ -14,13 +14,13 @@ public:
     Enclosure(int initialCapacity = 15); // Constructor
     ~Enclosure(); // Destructor
 
-    int getCapacity() const; // Getter for the maximum capacity of the enclosure
-    int getAnimalCount() const; // Getter for the number of animals in the enclosure
+    int get_capacity() const; // Getter for the maximum capacity of the enclosure
+    int get_animal_count() const; // Getter for the number of animals in the enclosure
 
-    bool addAnimal(Living_Animal* animal); // Add an animal to the enclosure
-    bool removeAnimal(Living_Animal* animal); // Remove an animal from the enclosure
+    bool add_animal(Living_Animal* animal); // Add an animal to the enclosure
+    bool remove_animal(Living_Animal* animal); // Remove an animal from the enclosure
 
-    void upgradeCapacity(int additionalCapacity); // Upgrade the capacity of the enclosure
+    void upgrade_capacity(int additionalCapacity); // Upgrade the capacity of the enclosure
 };
 
 #endif
