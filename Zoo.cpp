@@ -74,7 +74,7 @@ void Zoo::manage_animals() {
             sell_animal();
             break;
         case 5:
-            feed_animals();
+            
         default:
             std::cout << "Invalid choice\n";
     }
@@ -112,6 +112,7 @@ void Zoo::sell_animal() {
     std::cout << "1. Mammals\n";
     std::cout << "2. Amphibians\n";
     std::cout << "3. Avians\n";
+    std::cout << "Enter your choice: ";
     int type_choice;
     std::cin >> type_choice;
 
@@ -147,7 +148,7 @@ void Zoo::sell_animal() {
             }
             std::cout << "Amphibians available for sale:\n";
             for (int i = 0; i < amphibians.size(); ++i) {
-                std::cout << i + 1 << " | " << amphibians[i] << std::endl;
+                std::cout << i + 1<< " | " << amphibians[i] << std::endl;
             }
             std::cout << "Enter the index of the amphibian you want to sell (1 - " << amphibians.size() << "): ";
             std::cin >> index;
@@ -233,35 +234,56 @@ void Zoo::fire_zookeeper() {
 
 // Private member functions to buy animals
 void Zoo::buy_amphibian() {
-    Living_Animal_Amphibian* amphibian = new Living_Animal_Amphibian("Frog", 0.1, 0.5, true);
-    if (amphibian_enclosure.add_animal(amphibian)) {
-        finances.record_expense(100); // Example expense for buying an amphibian
-        std::cout << "Bought a new amphibian." << std::endl;
+    double price = 100;
+    if (finances.get_balance() >= price) {
+        Living_Animal_Amphibian* newAmphibian = new Living_Animal_Amphibian("Amphibian", 1.0, 1.0, true); // Example: all mammals need shelter
+        if (amphibian_enclosure.add_animal(newAmphibian)) {
+            amphibians.push_back(newAmphibian);
+            finances.record_expense(price);
+            std::cout << "Bought a new amphibian!" << std::endl;
+            std::cout << "Current number of amphibians: " << amphibians.size() << std::endl;
+        } else {
+            std::cout << "Enclosure is full, cannot add new amphibian!" << std::endl;
+            delete newAmphibian;
+        }
     } else {
-        std::cout << "No space for new amphibian." << std::endl;
-        delete amphibian;
+        std::cout << "Not enough funds to buy a new mammal!" << std::endl;
     }
 }
 
 void Zoo::buy_mammal() {
-    Living_Animal_Mammal* mammal = new Living_Animal_Mammal("Elephant", 3.0, 5000.0, true);
-    if (mammal_enclosure.add_animal(mammal)) {
-        finances.record_expense(5000); // Example expense for buying a mammal
-        std::cout << "Bought a new mammal." << std::endl;
+    double price = 5000;
+    if (finances.get_balance() >= price) {
+        Living_Animal_Mammal* newMammal = new Living_Animal_Mammal("Mammal", 5.0, 4.0, true); // Example: all mammals need shelter
+        if (mammal_enclosure.add_animal(newMammal)) {
+            mammals.push_back(newMammal);
+            finances.record_expense(price);
+            std::cout << "Bought a new mammal!" << std::endl;
+            std::cout << "Current number of mammals: " << mammals.size() << std::endl;
+        } else {
+            std::cout << "Enclosure is full, cannot add new mammal!" << std::endl;
+            delete newMammal;
+        }
     } else {
-        std::cout << "No space for new mammal." << std::endl;
-        delete mammal;
+        std::cout << "Not enough funds to buy a new mammal!" << std::endl;
     }
 }
 
 void Zoo::buy_avian() {
-    Living_Animal_Avian* avian = new Living_Animal_Avian("Eagle", 1.0, 10.0, true);
-    if (avian_enclosure.add_animal(avian)) {
-        finances.record_expense(500); // Example expense for buying an avian
-        std::cout << "Bought a new avian." << std::endl;
+    double price = 500;
+    if (finances.get_balance() >= price) {
+        Living_Animal_Avian* newAvian = new Living_Animal_Avian("Avian", 2.0, 1.0, true); // Example: all mammals need shelter
+        if (avian_enclosure.add_animal(newAvian)) {
+            avians.push_back(newAvian);
+            finances.record_expense(price);
+            std::cout << "Bought a new avian!" << std::endl;
+            std::cout << "Current number of avians: " << avians.size() << std::endl;
+        } else {
+            std::cout << "Enclosure is full, cannot add new avian!" << std::endl;
+            delete newAvian;
+        }
     } else {
-        std::cout << "No space for new avian." << std::endl;
-        delete avian;
+        std::cout << "Not enough funds to buy a new avian!" << std::endl;
     }
 }
 

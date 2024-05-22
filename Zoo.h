@@ -19,6 +19,9 @@ private:
     double average_visitor_satisfaction;
     std::vector<Living_Zookeeper*> staff;
     std::vector<Visitor*> visitors;
+    std::vector<Living_Animal_Mammal*> mammals;
+    std::vector<Living_Animal_Amphibian*> amphibians;
+    std::vector<Living_Animal_Avian*> avians;
     Enclosure mammal_enclosure;
     Enclosure amphibian_enclosure;
     Enclosure avian_enclosure;
