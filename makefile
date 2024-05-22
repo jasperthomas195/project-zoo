@@ -1,0 +1,2 @@
+Zoo: Enclosure.cpp Finances.cpp Living_Animal_Amphibian.cpp Living_Animal_Mammal.cpp Living_Animal_Avian.cpp Living_Animal.cpp Living_Zookeeper.cpp Living.cpp main.cpp Visitor.cpp Zoo.cpp Enclosure.h Finances.h Living_Animal_Amphibian.h Living_Animal_Mammal.h Living_Animal_Avian.h Living_Zookeeper.h Living.h Visitor.h Zoo.h
+    g++ Enclosure.cpp Finances.cpp Living_Animal_Amphibian.cpp Living_Animal_Mammal.cpp Living_Animal_Avian.cpp Living_Animal.cpp Living_Zookeeper.cpp Living.cpp main.cpp Visitor.cpp Zoo.cpp -o Zoo
