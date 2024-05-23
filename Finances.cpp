@@ -22,3 +22,13 @@ double Finances::calculate_net_profit() const {
 double Finances::get_balance() const {
     return calculate_net_profit();
 }
+
+void Finances::set_balance(double new_balance) {
+    double net_profit = calculate_net_profit();
+    double adjustment = new_balance - net_profit;
+    if (adjustment > 0) {
+        total_income += adjustment;
+    } else {
+        total_expenses -= adjustment;
+    }
+}

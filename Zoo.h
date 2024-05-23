@@ -12,6 +12,7 @@
 #include "Living_Zookeeper.h"
 #include "Finances.h"
 #include "Enclosure.h"
+#include <string>
 
 class Zoo {
 private:
@@ -53,6 +54,8 @@ public:
     void buy_mammal(const std::string& name);
     void buy_avian(const std::string& name);
     void feed_animals();
+    void save_game(const std::string& filename) const;
+    void load_game(const std::string& filename);
 
     const Enclosure& get_mammal_enclosure() const { return mammal_enclosure; }
     const Enclosure& get_amphibian_enclosure() const { return amphibian_enclosure; }

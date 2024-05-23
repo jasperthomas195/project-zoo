@@ -18,6 +18,7 @@ void displayMenu() {
     std::cout << "4. Close the zoo for the day\n";
     std::cout << "5. Check current balance\n";
     std::cout << "6. Exit\n";
+    std::cout << "7. Save game\n";
     std::cout << "Enter your choice: ";
 }
 
@@ -55,18 +56,21 @@ int main() {
             case 6:
                 std::cout << "Exiting the zoo management system.\n";
                 break;
+            case 7:
+            myZoo.save_game("save_file.txt");
+                break;
             default:
                 std::cout << "Invalid choice. Please try again.\n";
                 break;
         }
 
-        if (choice != 6) {
+        if (choice != 7) {
             std::cout << "\nPress Enter to continue...";
             std::cin.ignore(); // Ignore the previous newline character
             std::cin.get(); // Wait for the user to press Enter
         }
 
-    } while (choice != 6);
+    } while (choice != 7);
 
     return 0;
 }

@@ -66,3 +66,7 @@ void Living_Animal::feed(int food_amount) {
 int Living_Animal::get_visitors_per_hour() const {
 return (hunger_level < 70) ? (visitors_per_hour / 2) : visitors_per_hour;
 }
+
+std::string Living_Animal::get_name() const {
+    return name;
+}

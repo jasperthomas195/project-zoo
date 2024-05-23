@@ -21,6 +21,8 @@ public:
 
     // Function to get the balance
     double get_balance() const;
+
+    void set_balance(double new_balance);
 };
 
 #endif // FINANCES_H

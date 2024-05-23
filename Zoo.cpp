@@ -2,6 +2,14 @@
 #include "Visitor.h"
 #include <algorithm>
 #include <random>
+#include <fstream>
+#include <iostream>
+#include "Finances.h"
+#include "Living_Animal.h"
+#include "Living_Animal_Amphibian.h"
+#include "Living_Animal_Mammal.h"
+#include "Living_Animal_Avian.h"
+#include "Living_Zookeeper.h"
 
 // Constructor
 Zoo::Zoo(double initial_balance)
@@ -45,7 +53,7 @@ void Zoo::open_for_day() {
 
     int num_visitors = rand() % 100 + 1;
     // Add the visitors
-    for (int i = 0; i < num_visitors; ++i) {
+    for (int i = 0; i < num_visitors; i++) {
         Visitor* newVisitor = new Visitor(); // Assuming default constructor for Visitor
         admit_visitor(newVisitor);
     }
@@ -177,7 +185,7 @@ void Zoo::sell_animal() {
                 return;
             }
             std::cout << "Mammals available for sale:\n";
-            for (int i = 0; i < mammals.size(); ++i) {
+            for (int i = 0; i < mammals.size(); i++) {
                 std::cout << i + 1 << " | " << mammals[i]->name << std::endl;
             }
             std::cout << "Enter the index of the mammal you want to sell (1 - " << mammals.size() << "): ";
@@ -200,7 +208,7 @@ void Zoo::sell_animal() {
                 return;
             }
             std::cout << "Amphibians available for sale:\n";
-            for (int i = 0; i < amphibians.size(); ++i) {
+            for (int i = 0; i < amphibians.size(); i++) {
                 std::cout << i + 1<< " | " << amphibians[i]->name << std::endl;
             }
             std::cout << "Enter the index of the amphibian you want to sell (1 - " << amphibians.size() << "): ";
@@ -223,7 +231,7 @@ void Zoo::sell_animal() {
                 return;
             }
             std::cout << "Avians available for sale:\n";
-            for (int i = 0; i < avians.size(); ++i) {
+            for (int i = 0; i < avians.size();i++) {
                 std::cout << i + 1 << " | " << avians[i]->name << std::endl;
             }
             std::cout << "Enter the index of the avian you want to sell (1 - " << avians.size() << "): ";
@@ -369,6 +377,47 @@ double Zoo::calculate_average_visitor_satisfaction() const {
     }
     return total_satisfaction / visitors.size();
 }
+
+void Zoo::save_game(const std::string& filename) const {
+    std::ofstream saveFile(filename);
+    if (!saveFile.is_open()) {
+        std::cerr << "Failed to open file: " << filename << "\n";
+        return;
+    }
+
+    // Save financial data
+    saveFile << "Balance: $" << finances.get_balance() << "\n";
+
+    // Save enclosures
+    saveFile << "Mammal Enclosure Capacity: " << mammal_enclosure.get_capacity() << "\n";
+    saveFile << "Amphibian Enclosure Capacity: " << amphibian_enclosure.get_capacity() << "\n";
+    saveFile << "Avian Enclosure Capacity: " << avian_enclosure.get_capacity() << "\n";
+
+    // Save animals
+    saveFile << "Amphibians:\n";
+    for (const Living_Animal_Amphibian* amphibian : amphibians) {
+        saveFile << amphibian->get_name() << " | " << amphibian->get_hunger_level() << " | " << amphibian->get_happiness_level() << "\n";
+    }
+
+    saveFile << "Mammals:\n";
+    for (const Living_Animal_Mammal* mammal : mammals) {
+        saveFile << mammal->get_name() << " | " << mammal->get_hunger_level() << " | " << mammal->get_happiness_level() << "\n";
+    }
+
+    saveFile << "Avians:\n";
+    for (const Living_Animal_Avian* avian : avians) {
+        saveFile << avian->get_name() << " | " << avian->get_hunger_level() << " | " << avian->get_happiness_level() << "\n";
+    }
+
+    // Save zookeepers
+    saveFile << "Number of zookeepers:\n";
+    saveFile << staff.size() << "\n";
+
+    saveFile.close();
+    std::cout << "Game saved to " << filename << "\n";
+}
+
+
 
 double Zoo::calculate_animal_income() const {
     double total_income = 0.0;
