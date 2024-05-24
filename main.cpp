@@ -1,12 +1,12 @@
 #include "Zoo.h"
 #include <iostream>
-#include <cstdlib> // For system("clear") or system("cls")
+#include <cstdlib>
 
 void clearScreen() {
 #ifdef _WIN32
-    system("cls");  // Use "cls" command on Windows
+    system("cls");
 #else
-    system("clear");  // Use "clear" command on Unix-like systems
+    system("clear"); 
 #endif
 }
 

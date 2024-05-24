@@ -2,11 +2,10 @@
 #define FINANCES_H
 
 class Finances {
-private:
-    double total_income;
-    double total_expenses;
 
 public:
+    double total_income;
+    double total_expenses;
     // Constructor
     Finances();
 

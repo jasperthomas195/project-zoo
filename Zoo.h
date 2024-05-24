@@ -54,7 +54,6 @@ public:
     void buy_avian(const std::string& name);
     void feed_animals();
     void save_game(const std::string& filename) const;
-    void load_game(const std::string& filename);
 
     const Enclosure& get_mammal_enclosure() const { return mammal_enclosure; }
     const Enclosure& get_amphibian_enclosure() const { return amphibian_enclosure; }
