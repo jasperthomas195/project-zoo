@@ -29,6 +29,7 @@ private:
     Finances finances;
 
     double calculate_average_visitor_satisfaction() const;
+    bool is_open;
 
 public:
     Zoo(double initial_balance);

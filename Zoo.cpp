@@ -34,7 +34,8 @@ Zoo::~Zoo() {
 
 // Open the zoo for the day
 void Zoo::open_for_day() {
-    int num_zookeepers = staff.size();
+    if (!is_open) {
+           int num_zookeepers = staff.size();
     int zookeeper_cost = num_zookeepers * 200;
     visitors_today = 0;
     visitors.clear();
@@ -60,11 +61,17 @@ void Zoo::open_for_day() {
 
     finances.record_expense(zookeeper_cost);
     std::cout << "Zoo is now open for the day with " << num_visitors << " visitors." << std::endl;
+        is_open = true;
+    } else {
+        std::cout << "The zoo is already open." << std::endl;
+    }
+
 }
 
 // Close the zoo for the day
 void Zoo::close_for_day() {
-    for (Living_Animal* animal : mammals) {
+    if (is_open) {
+        for (Living_Animal* animal : mammals) {
     animal->check_levels();
     }
 
@@ -88,6 +95,11 @@ void Zoo::close_for_day() {
     std::cout << "Average visitor satisfaction for the day: " << get_average_visitor_satisfaction() << std::endl;
     std::cout << "Daily income: $" << daily_income << std::endl;
     std::cout << "Current balance: $" << finances.get_balance();
+    std::cout << "The zoo is now closed for the day." << std::endl;
+    is_open = false;
+    } else {
+        std::cout << "The zoo is already closed." << std::endl;
+    }
 }
 
 // Admit a visitor to the zoo
