@@ -1,4 +1,3 @@
-# Makefile for Zoo Simulator
 
 # Compiler
 CXX = g++
