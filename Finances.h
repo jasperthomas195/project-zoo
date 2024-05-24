@@ -1,6 +1,9 @@
 #ifndef FINANCES_H
 #define FINANCES_H
 
+#include <sstream>
+#include <iomanip>
+
 class Finances {
 
 public:
@@ -22,6 +25,9 @@ public:
     double get_balance() const;
 
     void set_balance(double new_balance);
+    
+    // Virtual function to get financial summary
+    virtual std::string get_financial_summary() const;
 };
 
 #endif // FINANCES_H

@@ -54,7 +54,7 @@ void Zoo::open_for_day() {
     int num_visitors = rand() % 100 + 1;
     // Add the visitors
     for (int i = 0; i < num_visitors; i++) {
-        Visitor* newVisitor = new Visitor(); // Assuming default constructor for Visitor
+        Visitor* newVisitor = new Visitor(); // Dynamic memory allocation
         admit_visitor(newVisitor);
     }
 
@@ -431,4 +431,8 @@ double Zoo::calculate_animal_income() const {
         total_income += avian->get_visitors_per_hour() * 10; // Example: each visitor contributes $7
     }
     return total_income;
+}
+
+std::string Zoo::get_financial_summary() const {
+    return finances.get_financial_summary();
 }

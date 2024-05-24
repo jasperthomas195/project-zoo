@@ -32,3 +32,13 @@ void Finances::set_balance(double new_balance) {
         total_expenses -= adjustment;
     }
 }
+
+// Virtual function to get financial summary
+std::string Finances::get_financial_summary() const {
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(2);
+    oss << "Total Income: $" << total_income << "\n";
+    oss << "Total Expenses: $" << total_expenses << "\n";
+    oss << "Net Profit: $" << calculate_net_profit() << "\n";
+    return oss.str();
+}

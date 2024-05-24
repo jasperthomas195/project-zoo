@@ -9,6 +9,7 @@ public:
 
     // Constructor
     Living_Zookeeper(const std::string& name, double hourly_rate);
+    virtual void perform_duties() const;
 };
 
 #endif

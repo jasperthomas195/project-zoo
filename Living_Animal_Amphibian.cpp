@@ -8,4 +8,6 @@ Living_Animal_Amphibian::Living_Animal_Amphibian(const std::string& name, double
 int Living_Animal_Amphibian::amphibian_cleanliness() const {
     return (height + weight) / 100;
 
+
+
 }

@@ -16,7 +16,7 @@ void displayMenu() {
     std::cout << "2. Manage animals\n";
     std::cout << "3. Manage staff\n";
     std::cout << "4. Close the zoo for the day\n";
-    std::cout << "5. Check current balance\n";
+    std::cout << "5. Financial summary\n";
     std::cout << "6. Save game\n";
     std::cout << "Enter your choice: ";
 }
@@ -65,7 +65,7 @@ int main() {
                 myZoo.close_for_day();
                 break;
             case 5:
-                std::cout << "Current balance: $" << myZoo.get_zoo_balance() << std::endl;
+                std::cout << "Financial summary: \n" << myZoo.get_financial_summary() << std::endl;
                 break;
             case 6:
             myZoo.save_game("save_file.txt");
