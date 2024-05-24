@@ -46,7 +46,6 @@ public:
     double get_average_visitor_satisfaction() const;
     double get_zoo_balance() const;
 
-    // Change access level to public for testing
     void hire_zookeeper();
     void fire_zookeeper();
     void zookeeper_status();
