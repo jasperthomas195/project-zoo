@@ -10,6 +10,7 @@
 #include "Living_Animal_Mammal.h"
 #include "Living_Animal_Avian.h"
 #include "Living_Zookeeper.h"
+#include "Menu.h"
 
 // Constructor
 Zoo::Zoo(double initial_balance)
@@ -204,7 +205,7 @@ void Zoo::sell_animal() {
             std::cin >> index;
             if (index >= 1 && index <= mammals.size()) {
                 Living_Animal* animalSold = mammals[index - 1];
-                double animalValue = .90 * 5000; // Assuming getValue() method exists in Living_Animal
+                double animalValue = .90 * 5000;
                 finances.record_income(animalValue);
                 delete animalSold;
                 mammals.erase(mammals.begin() + index - 1);
@@ -250,7 +251,7 @@ void Zoo::sell_animal() {
             std::cin >> index;
             if (index >= 1 && index <= avians.size()) {
                 Living_Animal* animalSold = avians[index - 1];
-                double animalValue = 0.90 * 500; // Assuming getValue() method exists in Living_Animal
+                double animalValue = 0.90 * 500;
                 finances.record_income(animalValue);
                 delete animalSold;
                 avians.erase(avians.begin() + index - 1);
@@ -313,7 +314,7 @@ void Zoo::zookeeper_status() {
 void Zoo::buy_amphibian(const std::string& name) {
     double price = 100;
     if (finances.get_balance() >= price) {
-        Living_Animal_Amphibian* newAmphibian = new Living_Animal_Amphibian(name, 1.0, 1.0, true); // Example: all mammals need shelter
+        Living_Animal_Amphibian* newAmphibian = new Living_Animal_Amphibian(name, 1.0, 1.0, true); 
         if (amphibian_enclosure.add_animal(newAmphibian)) {
             amphibians.push_back(newAmphibian);
             finances.record_expense(price);
@@ -331,7 +332,7 @@ void Zoo::buy_amphibian(const std::string& name) {
 void Zoo::buy_mammal(const std::string& name) {
     double price = 5000;
     if (finances.get_balance() >= price) {
-        Living_Animal_Mammal* newMammal = new Living_Animal_Mammal(name, 3.0, 1.0, true); // Example: all mammals need shelter
+        Living_Animal_Mammal* newMammal = new Living_Animal_Mammal(name, 3.0, 1.0, true);
         if (mammal_enclosure.add_animal(newMammal)) {
             mammals.push_back(newMammal);
             finances.record_expense(price);
@@ -447,4 +448,23 @@ double Zoo::calculate_animal_income() const {
 
 std::string Zoo::get_financial_summary() const {
     return finances.get_financial_summary();
+}
+
+void Zoo::clearScreen() {
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear"); 
+#endif
+}
+
+void Zoo::displayMenu() {
+    std::cout << "Zoo Management System:\n";
+    std::cout << "1. Open the zoo for the day\n";
+    std::cout << "2. Manage animals\n";
+    std::cout << "3. Manage staff\n";
+    std::cout << "4. Close the zoo for the day\n";
+    std::cout << "5. Financial summary\n";
+    std::cout << "6. Save game\n";
+    std::cout << "Enter your choice: ";
 }

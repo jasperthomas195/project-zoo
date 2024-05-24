@@ -2,25 +2,6 @@
 #include <iostream>
 #include <cstdlib>
 
-void clearScreen() {
-#ifdef _WIN32
-    system("cls");
-#else
-    system("clear"); 
-#endif
-}
-
-void displayMenu() {
-    std::cout << "Zoo Management System:\n";
-    std::cout << "1. Open the zoo for the day\n";
-    std::cout << "2. Manage animals\n";
-    std::cout << "3. Manage staff\n";
-    std::cout << "4. Close the zoo for the day\n";
-    std::cout << "5. Financial summary\n";
-    std::cout << "6. Save game\n";
-    std::cout << "Enter your choice: ";
-}
-
 int main() {
     double initial_balance;
     std::cout << "Enter initial balance for the zoo: ";
@@ -35,21 +16,21 @@ int main() {
     int choice;
 
     do {
-        clearScreen();
-        displayMenu();
+        myZoo.clearScreen();
+        myZoo.displayMenu();
         std::cin >> choice;
 
         if (std::cin.fail()) {
-        std::cin.clear(); // Clear the error flag
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore the rest of the input
-        clearScreen();
-        std::cout << "Invalid choice. Please enter a number.\n";
-        std::cout << "\nPress Enter to continue...";
-        std::cin.get(); // Wait for the user to press Enter
-        continue; // Skip the rest of the loop and show the menu again
+            std::cin.clear(); // Clear the error flag
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore the rest of the input
+            myZoo.clearScreen();
+            std::cout << "Invalid choice. Please enter a number.\n";
+            std::cout << "\nPress Enter to continue...";
+            std::cin.get(); // Wait for the user to press Enter
+            continue; // Skip the rest of the loop and show the menu again
         }
 
-        clearScreen(); // Clear screen before displaying the result
+        myZoo.clearScreen();
 
         switch (choice) {
             case 1:
@@ -68,7 +49,7 @@ int main() {
                 std::cout << "Financial summary: \n" << myZoo.get_financial_summary() << std::endl;
                 break;
             case 6:
-            myZoo.save_game("save_file.txt");
+                myZoo.save_game("save_file.txt");
                 break;
             default:
                 std::cout << "Invalid choice. Please try again.\n";

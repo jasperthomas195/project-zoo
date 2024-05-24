@@ -62,6 +62,8 @@ public:
     void show_animal_status();
     double calculate_animal_income() const;
     std::string get_financial_summary() const;
+    static void clearScreen();
+    static void displayMenu();
 
 };
 
